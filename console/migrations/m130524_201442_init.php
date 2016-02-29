@@ -40,10 +40,10 @@ class m130524_201442_init extends Migration
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
 		
-        $this->batchInsert('user', ['id', 'username', 'password_hash', 'email', 'status', 'created_at', 'updated_at'], [
+        $this->batchInsert('{{%user}}', ['id', 'username', 'password_hash', 'email', 'status', 'created_at', 'updated_at'], [
             [1, 'user', Yii::$app->security->generatePasswordHash('user'), 'user@example.com', User::STATUS_ACTIVE, time(), time()],
         ]);
-        $this->batchInsert('admin', ['id', 'username', 'password_hash', 'email', 'status', 'created_at', 'updated_at'], [
+        $this->batchInsert('{{%admin}}', ['id', 'username', 'password_hash', 'email', 'status', 'created_at', 'updated_at'], [
             [1, 'admin', Yii::$app->security->generatePasswordHash('admin'), 'admin@example.com', Admin::STATUS_ACTIVE, time(), time()],
         ]);
         
@@ -52,5 +52,6 @@ class m130524_201442_init extends Migration
     public function down()
     {
         $this->dropTable('{{%user}}');
+        $this->dropTable('{{%admin}}');
     }
 }
