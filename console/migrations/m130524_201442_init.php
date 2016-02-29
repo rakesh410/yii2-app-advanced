@@ -24,6 +24,27 @@ class m130524_201442_init extends Migration
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
+
+        $this->createTable('{{%admin}}', [
+            'id' => $this->primaryKey(),
+            'username' => $this->string()->notNull()->unique(),
+            'auth_key' => $this->string(32)->notNull(),
+            'password_hash' => $this->string()->notNull(),
+            'password_reset_token' => $this->string()->unique(),
+            'email' => $this->string()->notNull()->unique(),
+
+            'status' => $this->smallInteger()->notNull()->defaultValue(10),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
+        ], $tableOptions);
+		
+        $this->batchInsert('user', ['id', 'username', 'password_hash', 'email', 'status', 'created_at', 'updated_at'], [
+            [1, 'user', Yii::$app->security->generatePasswordHash('user'), 'user@example.com', User::STATUS_ACTIVE, time(), time()],
+        ]);
+        $this->batchInsert('admin', ['id', 'username', 'password_hash', 'email', 'status', 'created_at', 'updated_at'], [
+            [1, 'admin', Yii::$app->security->generatePasswordHash('admin'), 'admin@example.com', User::STATUS_ACTIVE, time(), time()],
+        ]);
+        
     }
 
     public function down()
