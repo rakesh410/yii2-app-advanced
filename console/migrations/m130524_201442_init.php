@@ -1,6 +1,8 @@
 <?php
 
 use yii\db\Migration;
+use common\models\User;
+use common\models\Admin;
 
 class m130524_201442_init extends Migration
 {
@@ -42,7 +44,7 @@ class m130524_201442_init extends Migration
             [1, 'user', Yii::$app->security->generatePasswordHash('user'), 'user@example.com', User::STATUS_ACTIVE, time(), time()],
         ]);
         $this->batchInsert('admin', ['id', 'username', 'password_hash', 'email', 'status', 'created_at', 'updated_at'], [
-            [1, 'admin', Yii::$app->security->generatePasswordHash('admin'), 'admin@example.com', User::STATUS_ACTIVE, time(), time()],
+            [1, 'admin', Yii::$app->security->generatePasswordHash('admin'), 'admin@example.com', Admin::STATUS_ACTIVE, time(), time()],
         ]);
         
     }
